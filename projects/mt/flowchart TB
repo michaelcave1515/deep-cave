@@ -1,0 +1,48 @@
+flowchart TB
+    subgraph Input[Input]
+        Query[User Query]
+        Data[CSV Data]
+    end
+
+    subgraph Orchestrator[Multi-Agent Orchestrator]
+        direction TB
+        Orch[Orchestrator]
+        style Orch fill:#f96,stroke:#333,stroke-width:4px
+    end
+
+    subgraph Agents[Analysis Agents]
+        direction LR
+        Flight[Flight Agent]
+        Passenger[Passenger Agent]
+        Security[Security Agent]
+    end
+
+    subgraph LLM[Language Model]
+        LLM3[llama3.2]
+    end
+
+    Query --> Orch
+    Data --> Orch
+    
+    Orch --> Flight
+    Orch --> Passenger
+    Orch --> Security
+    
+    Flight --> LLM3
+    Passenger --> LLM3
+    Security --> LLM3
+    
+    Flight --> Results
+    Passenger --> Results
+    Security --> Results
+
+    style Input fill:#e1f5fe
+    style Orchestrator fill:#fff3e0
+    style Agents fill:#e8f5e9
+    style LLM fill:#fbe9e7
+
+    %% Add simple annotations
+    note1[Simple Questions]:::note -- e.g. --> Query
+    note2[Count-based Analysis]:::note -- performs --> Agents
+
+    classDef note fill:#fff,stroke:#333,stroke-dasharray: 5 5
